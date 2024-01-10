@@ -1,5 +1,6 @@
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
 vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
+vim.keymap.set('n', '<leader><esc>', vim.cmd.noh)
 
 vim.keymap.set('n', '<C-d>', '<C-d>zz')
 vim.keymap.set('n', '<C-u>', '<C-u>zz')
@@ -12,7 +13,7 @@ vim.keymap.set('n', '<leader>y', "\"+y")
 vim.keymap.set('n', '<leader>Y', "\"+Y")
 vim.keymap.set('v', '<leader>y', "\"+y")
 
-vim.keymap.set("n", "<C-t>", vim.cmd.Ex)
+vim.keymap.set("n", "<C-t>", vim.cmd.NvimTreeFocus)
 
 vim.keymap.set('n', '<C-S-h>', ":TmuxNavigateLeft<CR>")
 vim.keymap.set('n', '<C-S-j>', ":TmuxNavigateDown<CR>")
