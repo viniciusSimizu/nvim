@@ -9,10 +9,11 @@ vim.cmd(":set number relativenumber")
 vim.api.nvim_create_autocmd("VimEnter", {
 	once = true,
 	callback = function()
+		vim.cmd("colorscheme catppuccin")
 		vim.cmd(":hi LineNrAbove guifg=#FF2222")
 		vim.cmd(":hi LineNrBelow guifg=#22FF22")
 		vim.cmd(":hi LineNr guifg=#31C0DC")
-		vim.cmd(":hi Normal ctermbg=NONE guibg=NONE")
+		vim.cmd(":hi Normal guibg=NONE")
 	end,
 })
 
