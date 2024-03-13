@@ -4,3 +4,9 @@ vim.g.loaded_netrwPlugin = 1
 require("config")
 require("keymaps")
 require("plugins")
+
+vim.filetype.add({
+	extension = {
+		mustache = "html",
+	},
+})

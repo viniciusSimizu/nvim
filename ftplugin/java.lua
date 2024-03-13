@@ -1,6 +1,31 @@
+local jdtls_ok, jdtls = pcall(require, "jdtls")
+if not jdtls_ok then
+	vim.notify("JDTLS not found, install with :LspInstall jdtls")
+	return
+end
+
+local function run_spring_boot_debug()
+	local debug_param =
+		' -Dspring-boot.run.jvmArguments="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005"'
+	local profile_param = " -Dspring-boot.run.profiles=local "
+	local command = "mvn spring-boot:run " .. profile_param .. debug_param
+
+	vim.cmd("term " .. command)
+end
+
+local jdtls_dir = vim.fn.stdpath("data") .. "/mason/packages/jdtls"
+-- local java_lsp = home .. "/language_servers/jdt-language-server/bin/jdtls"
+local jdtls_lsp = jdtls_dir .. "/bin/jdtls"
+
+local root_markers = { "gradlew", "pom.xml", "rvnw", ".git" }
+local root_dir = vim.fs.dirname(vim.fs.find(root_markers, { upward = true })[1])
+local home = os.getenv("HOME")
+
+local java_debug = home .. "/debuggers/java-debug/com.microsoft.java.debug.plugin"
+
 local on_attach = function(_, bufnr)
 	require("jdtls.setup").add_commands()
-	require("jdtls").setup_dap()
+	jdtls.setup_dap({ hotcodereplace = "auto" })
 
 	local function buf_set_option(...)
 		vim.api.nvim_buf_set_option(bufnr, ...)
@@ -17,13 +42,15 @@ local on_attach = function(_, bufnr)
 	vim.keymap.set("v", "<leader>de", "<Esc><Cmd>lua require('jdtls').extract_variable(true)<CR>", opts)
 	vim.keymap.set("n", "<leader>de", "<Cmd>lua require('jdtls').extract_variable()<CR>", opts)
 	vim.keymap.set("v", "<leader>dm", "<Esc><Cmd>lua require('jdtls').extract_method(true)<CR>", opts)
+	vim.keymap.set("n", "<F7>", function()
+		run_spring_boot_debug()
+	end)
 end
 
-local root_markers = { "gradlew", "pom.xml", "rvnw", ".git" }
-local root_dir = vim.fs.dirname(vim.fs.find(root_markers, { upward = true })[1])
-local home = os.getenv("HOME")
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-local capabilities = {
+capabilities = {
+	table.unpack(capabilities),
 	textDocument = {
 		completion = {
 			completionItem = {
@@ -33,6 +60,9 @@ local capabilities = {
 	},
 }
 
+local extendedClientCapabilities = jdtls.extendedClientCapabilities
+extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
+
 local config = {
 	flags = {
 		allow_incremental_sync = true,
@@ -40,31 +70,35 @@ local config = {
 	capabilities = capabilities,
 	on_attach = on_attach,
 	root_dir = root_dir,
-}
-
-config.settings = {
-	java = {
-		signatureHelp = { enabled = true },
-		sources = {
-			organizeImports = {
-				starThreshold = 9999,
-				staticStarThreshold = 9999,
+	cmd = { jdtls_lsp },
+	settings = {
+		java = {
+			eclipse = {
+				downloadSources = true,
 			},
-		},
-		codeGeneration = {
-			toString = {
-				template = "${object.className}{${member.name()}=${member.value}, ${otherMembers}}",
+			maven = {
+				downloadSources = true,
+			},
+			signatureHelp = { enabled = true },
+			sources = {
+				organizeImports = {
+					starThreshold = 9999,
+					staticStarThreshold = 9999,
+				},
+			},
+			codeGeneration = {
+				toString = {
+					template = "${object.className}{${member.name()}=${member.value}, ${otherMembers}}",
+				},
 			},
 		},
 	},
-}
-config.cmd = { home .. "/language_servers/jdt-language-server/bin/jdtls" }
-
-local extendedClientCapabilities = require("jdtls").extendedClientCapabilities
-extendedClientCapabilities.resolveAdditionalTextEditsSupport = true
-config.init_options = {
-	-- bundles = bundles;
-	extendedClientCapabilities = extendedClientCapabilities,
+	init_options = {
+		bundles = {
+			java_debug .. "/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar",
+		},
+		extendedClientCapabilities = extendedClientCapabilities,
+	},
 }
 
 -- UI
@@ -103,4 +137,4 @@ require("jdtls.ui").pick_one_async = function(items, prompt, label_fn, cb)
 end
 
 -- Server
-require("jdtls").start_or_attach(config)
+jdtls.start_or_attach(config)

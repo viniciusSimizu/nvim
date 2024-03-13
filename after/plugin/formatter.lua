@@ -51,20 +51,36 @@ require("formatter").setup({
 			require("formatter.filetypes.java").google_java_format,
 		},
 
+		c = {
+			require("formatter.filetypes.c").clangformat,
+		},
+
+		cpp = {
+			require("formatter.filetypes.cpp").clangformat,
+		},
+
 		html = {
 			require("formatter.filetypes.html").prettier,
+		},
+
+		markdown = {
+			require("formatter.filetypes.markdown").prettier,
 		},
 
 		css = {
 			require("formatter.filetypes.css").prettier,
 		},
 
-		sql = {
-			require("formatter.filetypes.sql").sqlfluff,
+		cmake = {
+			require("formatter.filetypes.cmake").cmakeformat,
 		},
 
 		xml = {
 			require("formatter.filetypes.xml").tidy,
+		},
+
+		yaml = {
+			require("formatter.filetypes.yaml").prettier,
 		},
 
 		-- Use the special "*" filetype for defining formatter configurations on
@@ -75,10 +91,4 @@ require("formatter").setup({
 			require("formatter.filetypes.any").remove_trailing_whitespace,
 		},
 	},
-})
-
-vim.api.nvim_create_augroup("__formatter__", { clear = true })
-vim.api.nvim_create_autocmd("BufWritePost", {
-	group = "__formatter__",
-	command = ":FormatWrite",
 })

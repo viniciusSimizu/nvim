@@ -3,9 +3,15 @@ require("lint").linters_by_ft = {
 	typescript = { "eslint" },
 	javascript = { "eslint" },
 	java = { "checkstyle" },
+	c = { "cppcheck" },
+	cpp = { "cppcheck" },
 	html = { "tidy" },
 	css = { "stylelint" },
 	sql = { "sqlfluff" },
+	yaml = { "yamllint" },
+	markdown = { "markdownlint" },
+	cmake = { "cmakelint" },
+	dockerfile = { "hadolint" },
 }
 
 vim.api.nvim_create_autocmd("BufWritePost", {

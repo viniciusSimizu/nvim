@@ -32,6 +32,7 @@ return require("packer").startup(function(use)
 			{ "mfussenegger/nvim-dap" },
 			{ "rcarriga/nvim-dap-ui" },
 			{ "hrsh7th/nvim-cmp" },
+			{ "rcarriga/cmp-dap" },
 			{ "hrsh7th/cmp-nvim-lsp" },
 			{ "hrsh7th/cmp-buffer" },
 			{ "hrsh7th/cmp-path" },
@@ -54,4 +55,6 @@ return require("packer").startup(function(use)
 	use({ "mfussenegger/nvim-jdtls" })
 
 	use({ "b3nj5m1n/kommentary" })
+
+	use({ "andweeb/presence.nvim" })
 end)

@@ -14,7 +14,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		vim.keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<cr>", opts)
 		vim.keymap.set("n", "gs", "<cmd>lua vim.lsp.buf.signature_help()<cr>", opts)
 		vim.keymap.set("n", "<leader>cr", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
-		vim.keymap.set({ "n", "x" }, "<leader>cf", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", opts)
+		-- vim.keymap.set({ "n", "x" }, "<leader>cf", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", opts)
+		vim.keymap.set({ "n", "x" }, "<leader>cf", "<cmd>:w | FormatWrite<cr>", opts)
 		vim.keymap.set("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
 
 		vim.keymap.set("n", "gl", "<cmd>lua vim.diagnostic.open_float()<cr>", opts)
@@ -34,7 +35,19 @@ lspconfig.tsserver.setup({
 	capabilities = capabilities,
 })
 
+lspconfig.clangd.setup({
+	capabilities = capabilities,
+})
+
 lspconfig.html.setup({
+	capabilities = capabilities,
+})
+
+lspconfig.marksman.setup({
+	capabilities = capabilities,
+})
+
+lspconfig.yamlls.setup({
 	capabilities = capabilities,
 })
 
@@ -46,6 +59,14 @@ lspconfig.emmet_ls.setup({
 	capabilities = capabilities,
 })
 
-lspconfig.sqls.setup({
+lspconfig.cmake.setup({
+	capabilities = capabilities,
+})
+
+lspconfig.dockerls.setup({
+	capabilities = capabilities,
+})
+
+lspconfig.docker_compose_language_service.setup({
 	capabilities = capabilities,
 })
