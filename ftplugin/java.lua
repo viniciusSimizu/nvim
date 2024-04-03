@@ -4,28 +4,15 @@ if not jdtls_ok then
 	return
 end
 
-local function run_spring_boot_debug()
-	local debug_param =
-		' -Dspring-boot.run.jvmArguments="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005"'
-	local profile_param = " -Dspring-boot.run.profiles=local "
-	local command = "mvn spring-boot:run " .. profile_param .. debug_param
-
-	vim.cmd("term " .. command)
-end
-
 local jdtls_dir = vim.fn.stdpath("data") .. "/mason/packages/jdtls"
 -- local java_lsp = home .. "/language_servers/jdt-language-server/bin/jdtls"
 local jdtls_lsp = jdtls_dir .. "/bin/jdtls"
 
 local root_markers = { "gradlew", "pom.xml", "rvnw", ".git" }
 local root_dir = vim.fs.dirname(vim.fs.find(root_markers, { upward = true })[1])
-local home = os.getenv("HOME")
-
-local java_debug = home .. "/debuggers/java-debug/com.microsoft.java.debug.plugin"
 
 local on_attach = function(_, bufnr)
 	require("jdtls.setup").add_commands()
-	jdtls.setup_dap({ hotcodereplace = "auto" })
 
 	local function buf_set_option(...)
 		vim.api.nvim_buf_set_option(bufnr, ...)
@@ -42,9 +29,6 @@ local on_attach = function(_, bufnr)
 	vim.keymap.set("v", "<leader>de", "<Esc><Cmd>lua require('jdtls').extract_variable(true)<CR>", opts)
 	vim.keymap.set("n", "<leader>de", "<Cmd>lua require('jdtls').extract_variable()<CR>", opts)
 	vim.keymap.set("v", "<leader>dm", "<Esc><Cmd>lua require('jdtls').extract_method(true)<CR>", opts)
-	vim.keymap.set("n", "<F7>", function()
-		run_spring_boot_debug()
-	end)
 end
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
