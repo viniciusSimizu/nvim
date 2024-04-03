@@ -12,3 +12,6 @@ require("nvim-tree").setup({
 		},
 	},
 })
+
+vim.keymap.set("n", "ç", vim.cmd.NvimTreeToggle)
+vim.keymap.set("n", "Ç", vim.cmd.NvimTreeFindFileToggle)

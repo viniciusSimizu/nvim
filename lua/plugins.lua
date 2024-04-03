@@ -39,8 +39,6 @@ return require("packer").startup(function(use)
 		},
 	})
 
-	use({ "christoomey/vim-tmux-navigator" })
-
 	use({ "lewis6991/gitsigns.nvim" })
 
 	use({ "theprimeagen/harpoon" })
@@ -52,6 +50,4 @@ return require("packer").startup(function(use)
 	use({ "mfussenegger/nvim-jdtls" })
 
 	use({ "b3nj5m1n/kommentary" })
-
-	use({ "andweeb/presence.nvim" })
 end)

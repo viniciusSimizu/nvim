@@ -31,42 +31,10 @@ lspconfig.lua_ls.setup({
 	capabilities = capabilities,
 })
 
-lspconfig.tsserver.setup({
-	capabilities = capabilities,
-})
-
-lspconfig.clangd.setup({
-	capabilities = capabilities,
-})
-
 lspconfig.html.setup({
 	capabilities = capabilities,
 })
 
-lspconfig.marksman.setup({
-	capabilities = capabilities,
-})
-
-lspconfig.yamlls.setup({
-	capabilities = capabilities,
-})
-
 lspconfig.cssls.setup({
-	capabilities = capabilities,
-})
-
-lspconfig.emmet_ls.setup({
-	capabilities = capabilities,
-})
-
-lspconfig.cmake.setup({
-	capabilities = capabilities,
-})
-
-lspconfig.dockerls.setup({
-	capabilities = capabilities,
-})
-
-lspconfig.docker_compose_language_service.setup({
 	capabilities = capabilities,
 })

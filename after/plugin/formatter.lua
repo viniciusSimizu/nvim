@@ -43,44 +43,20 @@ require("formatter").setup({
 			require("formatter.filetypes.javascript").prettier,
 		},
 
-		typescript = {
-			require("formatter.filetypes.typescript").prettier,
-		},
-
 		java = {
 			require("formatter.filetypes.java").google_java_format,
-		},
-
-		c = {
-			require("formatter.filetypes.c").clangformat,
-		},
-
-		cpp = {
-			require("formatter.filetypes.cpp").clangformat,
 		},
 
 		html = {
 			require("formatter.filetypes.html").prettier,
 		},
 
-		markdown = {
-			require("formatter.filetypes.markdown").prettier,
-		},
-
 		css = {
 			require("formatter.filetypes.css").prettier,
 		},
 
-		cmake = {
-			require("formatter.filetypes.cmake").cmakeformat,
-		},
-
 		xml = {
 			require("formatter.filetypes.xml").tidy,
-		},
-
-		yaml = {
-			require("formatter.filetypes.yaml").prettier,
 		},
 
 		-- Use the special "*" filetype for defining formatter configurations on
