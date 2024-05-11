@@ -78,9 +78,6 @@ local config = {
 		},
 	},
 	init_options = {
-		bundles = {
-			java_debug .. "/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar",
-		},
 		extendedClientCapabilities = extendedClientCapabilities,
 	},
 }
